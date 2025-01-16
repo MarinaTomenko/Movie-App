@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.main-panel {
+    margin-top: 70px;
+    /* Высота навигации */
+}
