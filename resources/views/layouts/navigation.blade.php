@@ -21,6 +21,40 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+    <a class="nav-link" href="{{ route('films') }}">
+        <i class="material-icons">local_movies</i>
+        <span class="nav-link-text">{{ __('Films') }}</span>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('series') }}">
+        <i class="material-icons">tv</i>
+        <span class="nav-link-text">{{ __('Series') }}</span>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('members') }}">
+        <i class="material-icons">people</i>
+        <span class="nav-link-text">{{ __('Members') }}</span>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('lists') }}">
+        <i class="material-icons">receipt_long</i>
+        <span class="nav-link-text">{{ __('Lists') }}</span>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('blog') }}">
+        <i class="material-icons">article</i>
+        <span class="nav-link-text">{{ __('Blog') }}</span>
+    </a>
+</li>
                 <!-- Выпадающее меню для профиля -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false">

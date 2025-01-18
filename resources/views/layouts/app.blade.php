@@ -27,10 +27,12 @@
 
                 <!-- Контент страницы -->
                 <div class="content">
-                    <div class="container-fluid">
-                        {{ $slot }}
-                    </div>
+                <div class="container-fluid">
+                    @section('content')
+                        <!-- Здесь можно добавить контент по умолчанию, если нужно -->
+                    @show
                 </div>
+            </div>
             </div>
         </div>
 
