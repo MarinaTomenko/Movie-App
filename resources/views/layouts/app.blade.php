@@ -12,6 +12,7 @@
 
         <!-- Подключение Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="{{ asset('css/movie.css') }}" rel="stylesheet">
     </head>
     <body>
         <div class="wrapper">

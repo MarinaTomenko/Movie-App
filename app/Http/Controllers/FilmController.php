@@ -17,25 +17,30 @@ class FilmController extends Controller
 
     public function index()
     {
-        // Получаем все фильмы с пагинацией и загружаем связанные жанры
-        $movies = Movie::with('genres')->paginate(10);
+        
+        $movies = Movie::with(['genres', 'apiRequest'])->paginate(10);
     
         $allGenres = [];
         foreach ($movies as $movie) {
-            // Проверяем, что жанры загружены и не являются null
+           
             if ($movie->genres) {
-                // Получаем массив жанров для текущего фильма
+         
                 foreach ($movie->genres as $genre) {
-                    // Предполагаем, что у жанра есть поле 'name' в таблице 'genres'
-                    $allGenres[] = $genre->name; // Замените 'name' на поле, содержащее название жанра
+                   
+                    $allGenres[] = $genre->name; 
                 }
+            }
+    
+            if ($movie->apiRequest && $movie->apiRequest->image_path) {
+                $movie->full_image_url = 'https://image.tmdb.org/t/p/w400' . $movie->apiRequest->image_path;
+            } else {
+                $movie->full_image_url = null; 
             }
         }
     
-        // Убираем дубликаты жанров, если они есть
+       
         $allGenres = array_unique($allGenres);
     
-        // Возвращаем представление с переданными фильмами
         return view('film.index', compact('movies', 'allGenres'));
     }
 }

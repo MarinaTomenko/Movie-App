@@ -8,6 +8,15 @@
         @foreach($movies as $movie)
             <div class="col-md-4 mb-4">
                 <div class="card">
+                <div class="d-flex justify-content-center">
+                    <!-- Проверяем, есть ли изображение -->
+                    @if ($movie->full_image_url)
+                        
+                        <img src="{{ $movie->full_image_url }}" class="card-img-top w-50" alt="{{ $movie->title }}" loading="lazy">
+                    @else
+                        <img src="https://via.placeholder.com/200x300" class="card-img-top movie-image" alt="Изображение отсутствует" loading="lazy">
+                    @endif
+                    </div>
                     <div class="card-header card-header-primary">
                         <h4 class="card-title">{{ $movie->title }}</h4>
                     </div>
@@ -20,6 +29,7 @@
                             @endforeach
                         </p>
                         <a href="#" class="btn btn-primary">Подробнее</a>
+                        
                     </div>
                 </div>
             </div>
