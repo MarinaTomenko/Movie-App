@@ -1,4 +1,7 @@
-<x-app-layout>
+
+@extends('layouts.app')
+
+@section('content')
 
 
 <div class="container-fluid py-4">
@@ -43,4 +46,5 @@
         </div>
     </div>
 </div>
-</x-app-layout>
+
+@endsection 

@@ -18,7 +18,7 @@ class FilmController extends Controller
     public function index()
     {
         
-        $movies = Movie::with(['genres', 'apiRequest'])->paginate(10);
+        $movies = Movie::with(['genres', 'apiRequest'])->paginate(12);
     
         $allGenres = [];
         foreach ($movies as $movie) {
@@ -39,7 +39,7 @@ class FilmController extends Controller
         }
     
        
-        $allGenres = array_unique($allGenres);
+        //$allGenres = array_unique($allGenres);
     
         return view('film.index', compact('movies', 'allGenres'));
     }

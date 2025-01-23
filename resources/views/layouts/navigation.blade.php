@@ -43,7 +43,7 @@
 </li>
 
 <li class="nav-item">
-    <a class="nav-link" href="{{ route('lists') }}">
+    <a class="nav-link" href="{{ route('collections.index') }}">
         <i class="material-icons">receipt_long</i>
         <span class="nav-link-text">{{ __('Lists') }}</span>
     </a>
