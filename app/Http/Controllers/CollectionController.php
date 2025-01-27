@@ -20,7 +20,7 @@ class CollectionController extends Controller
 
     public function create()
     {
-        $movies = Movie::all(); // Получите все фильмы из базы данных
+        $movies = []; // Получите все фильмы из базы данных
         return view('collection.create', compact('movies'));
     }
 
@@ -31,7 +31,7 @@ class CollectionController extends Controller
             "description" => ["required", "string"],
             "movies" => ["nullable", "array"],
         ]);
-    
+        dd($request->movies);
 
         $list = Collection::create([
             'title' => $request->title,
@@ -40,8 +40,13 @@ class CollectionController extends Controller
             'user_id' => Auth::id(),
         ]);
 
+        //if (!empty($request->movies)) {
+          //  $list->movies()->sync($request->movies);
+       // }
+
         if (!empty($request->movies)) {
-            $list->movies()->sync($request->movies);
+            $movieIds = is_array($request->movies) ? $request->movies : [$request->movies];
+            $list->movies()->sync($movieIds);
         }
         
     

@@ -6,28 +6,34 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-class Genre extends Model
+class Person extends Model
 {
     use HasFactory;
-
-    protected $table = 'genres'; 
+    protected $table = 'people'; 
 
     protected $fillable = [
         'name',
 
     ];
+
+
+    public function genres()
+    {
+        return $this->belongsToMany(Genre::class, 'movies_genres', 'movie_id', 'genre_id');
+    }
+
     public function movies()
     {
         return $this->belongsToMany(Movie::class);
     }
 
-
-
-    /*
-    public function movies(): BelongsToMany
+    public function movieCasts()
     {
-        return $this->belongsToMany(Movie::class, 'movies_genres', 'genre_id', 'movie_id');
-    } */
+        return $this->hasMany(Cast::class)->with(Person::class);
+    }
 
+    public function movieCrews()
+    {
+        return $this->hasMany(Crew::class)->with(Person::class);
+    }
 }

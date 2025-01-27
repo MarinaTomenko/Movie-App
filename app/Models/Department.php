@@ -7,19 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-class Genre extends Model
+class Department extends Model
 {
     use HasFactory;
 
-    protected $table = 'genres'; 
+    protected $table = 'departments'; 
 
     protected $fillable = [
         'name',
 
     ];
-    public function movies()
+    public function crews()
     {
-        return $this->belongsToMany(Movie::class);
+        return $this->HasMany(Crew::class);
     }
 
 

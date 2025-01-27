@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create List</title>
-
-    <!-- Подключение Select2 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
-<body>
+
     @extends('layouts.app')
 
     @section('content')
@@ -45,6 +41,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="movies">Select Movies</label>
+                                                
                                                 <select class="form-control select2" id="movies" name="movies[]" multiple="multiple" required>
                                                     @foreach($movies as $movie)
                                                         <option value="{{ $movie->id }}" 
@@ -98,53 +95,58 @@
             }
         </style>
 
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script>
             $(document).ready(function() {
-                console.log('Initializing Select2...');
-                $('#movies').select2({
-                    placeholder: "Select movies",
-                    allowClear: true,
-                    language: {
-                        searching: function() {
-                            return "Type to search...";
-                        }
+    $('#movies').select2({
+        placeholder: "Select movies",
+        allowClear: true,
+        ajax: {
+            url: "{{ route('movies.search') }}",
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                return {
+                    q: params.term,
+                    page: params.page || 1
+                };
+            },
+            processResults: function(data, params) {
+                params.page = params.page || 1;
+
+                return {
+                    results: data.results,
+                    pagination: {
+                        more: data.more
                     }
-                });
-                console.log('Select2 initialized.');
+                };
+            },
+            cache: true
+        },
+        minimumInputLength: 1
+    });
 
-                $('#movies').on('change', function() {
-                    $('#selectedMoviesList').empty(); 
-                    $(this).find('option:selected').each(function() {
-                        var title = $(this).data('title');
-                        var year = $(this).data('year');
-                        var image = $(this).data('image');
+    $('#movies').on('change', function() {
+        $('#selectedMoviesList').empty();
+        $(this).find('option:selected').each(function() {
+            var title = $(this).data('title');
+            var year = $(this).data('year');
+            var image = $(this).data('image');
 
-                       
-                        if (!title || !year || !image) {
-                            console.error('Missing data for selected movie:', { title, year, image });
-                            return;
-                        }
+            if (!title || !year || !image) {
+                console.error('Missing data for selected movie:', { title, year, image });
+                return;
+            }
 
-                        
-                        console.log(title, year, image);
-
-                      
-                        $('#selectedMoviesList').append(
-                            '<div class="movie-item">' +
-                                '<img src="' + image + '" alt="' + title + '">' +
-                                '<span>' + title + ' (' + year + ')</span>' +
-                            '</div>'
-                        );
-                    });
-                });
-
-                $('form').on('submit', function(e) {
-                    console.log('Form submitted');
-                });
-            });
+            $('#selectedMoviesList').append(
+                '<div class="movie-item">' +
+                    '<img src="' + image + '" alt="' + title + '">' +
+                    '<span>' + title + ' (' + year + ')</span>' +
+                '</div>'
+            );
+        });
+    });
+});
         </script>
     @endsection
-</body>
-</html>
+
 

@@ -6,28 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Cast extends Model
+class Crew extends Model
 {
     use HasFactory;
 
-    protected $table = 'movie_person'; 
+    protected $table = 'movie_crews'; 
 
 
     protected $fillable = [
         'movie_id',
         'person_id',
-        'character_name',
+        'job',
     ];
-
-    public function movies()
-    {
-        return $this->belongsToMany(Movie::class, 'movie_person', 'person_id', 'movie_id')
-                    ->withPivot('character_name');
-    }
-    public function persons()
-    {
-        return $this->belongsToMany(Person::class, 'people', 'movie_id', 'person_id');
-    }
 
     public function movie()
     {
@@ -38,4 +28,8 @@ class Cast extends Model
         return $this->belongsTo(Person::class);
     }
 
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
 }

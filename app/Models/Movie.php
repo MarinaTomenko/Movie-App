@@ -17,15 +17,9 @@ class Movie extends Model
         'overview',
     ];
 
- /*
-    public function genres(): BelongsToMany
+    public function genres()
     {
-        return $this->belongsToMany(Genre::class, 'movies_genres', 'movie_id', 'genre_id');
-    }
-*/
-    public function genres(): BelongsToMany
-    {
-        return $this->belongsToMany(Genre::class, 'movies_genres', 'movie_id', 'genre_id');
+        return $this->belongsToMany(Genre::class);
     }
 
     public function apiRequest()
@@ -37,4 +31,26 @@ class Movie extends Model
     {
         return $this->belongsToMany(MovieList::class, 'collection_movie');
     }
+
+    public function people()
+    {
+        return $this->belongsToMany(Person::class);
+    }
+
+    public function movieCasts()
+    {
+        return $this->hasMany(Cast::class);
+    }
+
+    
+    public function movieCrews()
+    {
+        return $this->hasMany(Crew::class); 
+    }
+
+    public function languages()
+    {
+        return $this->belongsToMany(Language::class);
+    }
+
 }

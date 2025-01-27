@@ -32,6 +32,15 @@
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#movieModal{{ $movie->id }}">
                             More...
                         </button>
+                        @if($movie)
+                        <a href="{{ route('films.view', ['id' => $movie->id]) }}" class="btn btn-primary btn-sm">
+                            More
+                        </a>
+                        @else
+                            <p>Movie not found.</p>
+                        @endif
+
+                         
                     </div>
                 </div>
             </div>

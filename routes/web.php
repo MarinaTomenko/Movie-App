@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FilmController;
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\BlogController;
@@ -25,6 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/films', [FilmController::class, 'index'])->name('films');
+    Route::get('/movies/search', [MovieController::class, 'search'])->name('movies.search');
+    Route::get('/films/{id}/view', [FilmController::class, 'view'])->name('films.view');
     Route::get('/series', [SeriesController::class, 'show'])->name('series');
     Route::get('/members', [MemberController::class, 'show'])->name('members');
     Route::get('/collections', [CollectionController::class, 'index'])->name('collections.index');
