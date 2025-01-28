@@ -11,12 +11,35 @@ class CollectionController extends Controller
 {
     public function index()
     {
-        $collections = Collection::paginate(10);
+        
+        $collections = Collection::with(['movies'])->get();
+      
+        foreach ($collections as $collection) {
+            $collection->imageUrl = null; // Инициализируем свойство
+            if ($collection->movies && count($collection->movies) > 0) {
+                foreach ($collection->movies as $movie) {
+                    if ($movie->apiRequest && $movie->apiRequest->image_path) {
+                        
+                        $collection->imageUrl = 'https://image.tmdb.org/t/p/w400' . $movie->apiRequest->image_path;
+                        break; 
+                    }
+                }
+            }
+        }
+        
 
-         return view('collection.index', compact('collections'));
+        $movies = Movie::with('apiRequest')->paginate(2);
+ 
+        $movie = Movie::with('apiRequest')->first();
+    
+        if ($movie->apiRequest && $movie->apiRequest->image_path) {
+            $movie->full_image_url = 'https://image.tmdb.org/t/p/w400' . $movie->apiRequest->image_path;
+        } else {
+            $movie->full_image_url = null;
+        }
+    
+        return view('collection.index', compact('collections', 'movies', 'movie'));
     }
-
-
 
     public function create()
     {
@@ -31,7 +54,7 @@ class CollectionController extends Controller
             "description" => ["required", "string"],
             "movies" => ["nullable", "array"],
         ]);
-        dd($request->movies);
+        //dd($request->movies);
 
         $list = Collection::create([
             'title' => $request->title,
@@ -51,5 +74,28 @@ class CollectionController extends Controller
         
     
         return redirect()->route("collections.index")->with("success", "List created!");
+    }
+
+
+    public function view($id) {
+        // Загружаем фильм с apiRequest, жанрами, людьми и актерами
+        $collection = Collection::with([
+            'movies',   
+        ])->find($id);
+
+        $movie = Movie::with([
+            'apiRequest',    
+        ])->find($id);
+        if (!$collection) {
+            return abort(404);
+        }
+
+        if ($movie->apiRequest && $movie->apiRequest->image_path) {
+            $movie->full_image_url = 'https://image.tmdb.org/t/p/w400' . $movie->apiRequest->image_path;
+        } else {
+            $movie->full_image_url = null;
+        }
+    
+        return view("collection.view", compact("movie", "collection"));
     }
 }

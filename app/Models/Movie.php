@@ -29,7 +29,7 @@ class Movie extends Model
 
     public function collections()
     {
-        return $this->belongsToMany(MovieList::class, 'collection_movie');
+        return $this->belongsToMany(Collection::class);
     }
 
     public function people()

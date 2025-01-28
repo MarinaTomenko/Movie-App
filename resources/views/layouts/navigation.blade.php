@@ -2,7 +2,7 @@
     <div class="container-fluid py-1 px-3">
         <!-- Логотип и бренд -->
         <a class="navbar-brand" href="{{ route('dashboard') }}">
-            {{ config('app.name', 'Laravel') }}
+            {{ config('app.name', 'MovieGroove') }}
         </a>
 
         <!-- Кнопка для мобильного меню -->

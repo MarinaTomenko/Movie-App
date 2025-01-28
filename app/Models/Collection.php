@@ -21,6 +21,7 @@ class Collection extends Model
     // Отношение "многие ко многим" с фильмами
     public function movies()
     {
-        return $this->belongsToMany(Movie::class, 'collection_movie');
+        print_r('movies');
+        return $this->belongsToMany(Movie::class);
     }
 }

@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/collections', [CollectionController::class, 'index'])->name('collections.index');
     Route::get('/collections/create', [CollectionController::class, 'create'])->name('collections.create');
     Route::post('/collections/store', [CollectionController::class, 'store'])->name('collections.store');
+    Route::post('/collections/{id}/view', [CollectionController::class, 'view'])->name('collections.view');
     Route::get('/blog', [BlogController::class, 'show'])->name('blog');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
    

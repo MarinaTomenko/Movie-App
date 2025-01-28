@@ -59,7 +59,7 @@ class FilmController extends Controller
                     $allGenres[] = $genre->name; 
                 }
             }
-    
+          
             if ($movie->apiRequest && $movie->apiRequest->image_path) {
                 $movie->full_image_url = 'https://image.tmdb.org/t/p/w400' . $movie->apiRequest->image_path;
             } else {
