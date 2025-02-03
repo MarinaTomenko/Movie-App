@@ -24,4 +24,9 @@ class Collection extends Model
         print_r('movies');
         return $this->belongsToMany(Movie::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

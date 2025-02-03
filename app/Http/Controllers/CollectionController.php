@@ -15,7 +15,7 @@ class CollectionController extends Controller
         $collections = Collection::with(['movies'])->get();
       
         foreach ($collections as $collection) {
-            $collection->imageUrl = null; // Инициализируем свойство
+            $collection->imageUrl = null; 
             if ($collection->movies && count($collection->movies) > 0) {
                 foreach ($collection->movies as $movie) {
                     if ($movie->apiRequest && $movie->apiRequest->image_path) {
@@ -78,24 +78,27 @@ class CollectionController extends Controller
 
 
     public function view($id) {
-        // Загружаем фильм с apiRequest, жанрами, людьми и актерами
+       
         $collection = Collection::with([
-            'movies',   
+            'movies.apiRequest', 
+            'user',  
         ])->find($id);
-
-        $movie = Movie::with([
-            'apiRequest',    
-        ])->find($id);
+    
         if (!$collection) {
             return abort(404);
         }
+    
 
-        if ($movie->apiRequest && $movie->apiRequest->image_path) {
-            $movie->full_image_url = 'https://image.tmdb.org/t/p/w400' . $movie->apiRequest->image_path;
-        } else {
-            $movie->full_image_url = null;
+        $movies = $collection->movies()->with('apiRequest')->paginate(10);
+    
+        foreach ($movies as $movie) {
+            if ($movie->apiRequest && $movie->apiRequest->image_path) {
+                $movie->full_image_url = 'https://image.tmdb.org/t/p/w400' . $movie->apiRequest->image_path;
+            } else {
+                $movie->full_image_url = null; 
+            }
         }
     
-        return view("collection.view", compact("movie", "collection"));
+        return view("collection.view", compact("collection", "movies"));
     }
 }
